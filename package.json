@@ -1,0 +1,21 @@
+{
+  "name": "notezippermern",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "Zunaira Anwar",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "nodemon backend/server.js",
+    "license": "ISC"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0"
+  }
+}
