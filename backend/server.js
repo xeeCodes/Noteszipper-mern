@@ -1,30 +1,43 @@
-const express = require("express");
-const notes = require("./data/notes.js");
-const dotenv = require("dotenv");
-const app = express();
+  const express = require("express");
+  const cors = require("cors");
+const connectdb = require("./config/db")
+  const notes = require("./data/notes.js");
+  const dotenv = require("dotenv");
+  const userRoutes = require('./routes/userRoutes');
+const { notFound, errorHandler } = require("./middleware/errorMiddleware.js");
 
-//config thr dotenv
-dotenv.config();
 
-//here creating a route
+  const app = express();
+  app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("Api is working... ");
-});
+  //config thr dotenv
+  dotenv.config();
+  app.use(cors());
+  connectdb();
 
-app.get("/api/notes", (req, res) => {
-  res.json(notes);
-});
+  //here creating a route
 
-app.get("/api/notes/:id", (req, res) => {
-  const note = notes.find((n) => n._id === req.params.id);
-  console.log(req.params);
-  res.send(note);
-});
+  app.get("/", (req, res) => {
+    res.send("Api is working... ");
+  });
 
-// here creating a server
-console.log("Initializing Express server...");
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+  app.get("/api/notes", (req, res) => {
+    res.json(notes);
+  });
+
+
+  // user routes
+
+  app.use("/api/users",userRoutes);
+  
+ // use middleware
+
+ app.use(notFound);
+ app.use(errorHandler);
+
+  // here creating a server
+  console.log("Initializing Express server...");
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });

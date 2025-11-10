@@ -7,16 +7,23 @@
   "type": "commonjs",
   "main": "server.js",
   "scripts": {
-    "start": "node backend/server.js",
-    "dev": "nodemon backend/server.js",
+    "start": "nodemon backend/server.js",
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm start\" \"npm run client\"",
     "license": "ISC"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "concurrently": "^9.2.1",
+    "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
+    "express-async-handler": "^1.2.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.19.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.30.1"
