@@ -4,6 +4,8 @@ const connectdb = require("./config/db")
   const notes = require("./data/notes.js");
   const dotenv = require("dotenv");
   const userRoutes = require('./routes/userRoutes');
+  const multer  = require('multer');
+const upload = multer({ dest: "uploads/" });
 const { notFound, errorHandler } = require("./middleware/errorMiddleware.js");
 
 
