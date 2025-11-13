@@ -5,9 +5,13 @@ import ErrorMesage from '../../components/ErrorMesage';
 import { useState,useEffect } from 'react';
 import MainScreen from '../../components/MainScreen';
 import './RegisterPage.css';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { regsiter } from '../../actions/UserActions';
 
 export default function RegisterPage() {
+
+const navigate  = useNavigate();
 
 const[formState,setformState] = useState({
 name:'',
@@ -19,8 +23,12 @@ picMessage:'',
 
 })
 
-const[error,setError] =useState('');
-const[loading,setLoading] =useState(false);
+const dispatch = useDispatch();
+
+const userRegister = useSelector(state=>state.userRegister);
+
+const {loading, error,userInfo} = userRegister;
+
 
 const[message,setMessage] =useState('');
 
@@ -45,9 +53,13 @@ const HandleChange = (e) => {
 
 
 useEffect(()=>{
+  if(userInfo){
+
+    navigate('/mynotes');
+  }
 
 
-},[])
+},[userInfo]);
 
 
 const myFormData =()=>{
@@ -69,33 +81,16 @@ const myFormData =()=>{
 
 const submitHandler = async (e) => {
   e.preventDefault();
-  setError("");
-  setMessage("");
 
-  if (formState.password !== formState.confirmpassword) {
-    setError("Passwords do not match");
-    return;
+  if(formState.password != formState.confirmpassword){
+
+    setMessage("Password do not match");
   }
-
-  try {
-    setLoading(true);
-    const apiFormData = myFormData();
-
-    const response = await axios.post(
-      "http://localhost:3001/api/users/register",
-      apiFormData,
-      { headers: { "Content-Type": "multipart/form-data" } }
-    );
-
-    console.log("User is Registered", response.data);
-    setMessage("Registration successful!");
-
-  } catch (err) {
-    console.log(err.message);
-    setError(err.response?.data?.message || "Registration failed");
+  else {
+    dispatch(regsiter(formState,myFormData));
   }
+ 
 
-  setLoading(false);
 };
 
   return (

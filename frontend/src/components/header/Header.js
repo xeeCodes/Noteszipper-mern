@@ -5,10 +5,25 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
-
+import { useNavigate } from "react-router-dom";
 import Col from "react-bootstrap/Col";
 import { Link } from "react-router-dom";
+import {logout} from '../../actions/UserActions'
+import { useDispatch, useSelector } from "react-redux";
 export default function Header() {
+
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const userLogin = useSelector(state => state.userLogin);
+  const {userInfo} = userLogin;
+
+  const logoutHandler = () =>{
+    dispatch(logout());
+    navigate('/');
+  }
+
   return (
     <>
       <Navbar expand="lg" className="bg-primary">
@@ -20,7 +35,7 @@ export default function Header() {
           </Col>
 
           <Col xl={6}>
-            <Form inline>
+            <Form >
               <Row>
                 <Col xl={4}>
                   <Form.Control
@@ -37,12 +52,10 @@ export default function Header() {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto ">
-                <Link to='/mynotes'>
-                  {" "}
-                  <Nav.Link href="#home" className="text-white">
-                    My Notes
-                  </Nav.Link>
-                </Link>
+                <Nav.Link as={Link} to="/mynotes" className="text-white">
+  My Notes
+</Nav.Link>
+
 
                 <NavDropdown
                   title={<span className="text-white">Zunaira Anwar</span>}
@@ -51,7 +64,11 @@ export default function Header() {
                   <NavDropdown.Item href="#action/3.1" className="">
                     My Profile
                   </NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.2">Logout</NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.2" onClick={()=>{
+logoutHandler();
+                    navigate('/');
+
+                  }}>Logout</NavDropdown.Item>
                 </NavDropdown>
               </Nav>
             </Navbar.Collapse>
