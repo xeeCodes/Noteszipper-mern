@@ -6,6 +6,7 @@ const connectdb = require("./config/db")
   const userRoutes = require('./routes/userRoutes');
   const multer  = require('multer');
 const upload = multer({ dest: "uploads/" });
+const noteRoutes = require('./routes/noteRoutes');
 const { notFound, errorHandler } = require("./middleware/errorMiddleware.js");
 
 
@@ -19,18 +20,16 @@ const { notFound, errorHandler } = require("./middleware/errorMiddleware.js");
 
   //here creating a route
 
-  app.get("/", (req, res) => {
-    res.send("Api is working... ");
-  });
+  
 
-  app.get("/api/notes", (req, res) => {
-    res.json(notes);
-  });
-
+ 
 
   // user routes
 
   app.use("/api/users",userRoutes);
+  // notes route
+
+  app.use("/api/notes",noteRoutes);
   
  // use middleware
 
