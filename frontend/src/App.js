@@ -6,6 +6,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MyNotes from "./screens/myNotes/MyNotes";
 import LoginPage from "./screens/loginPage/LoginPage";
 import RegisterPage from "./screens/registerPage/RegisterPage";
+import CreateNote from "./screens/createNote/CreateNote";
+import SingleNote from "./screens/createNote/SingleNote";
 
 function App() {
   return (
@@ -17,6 +19,9 @@ function App() {
           <Route path="/" element={<LandingPage />} exact/>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/createnote" element={<CreateNote />} />
+          <Route path="/note/:id" element={<SingleNote />} />
+
 
           <Route path="/mynotes" element={<MyNotes />} />
         </Routes>

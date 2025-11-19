@@ -47,6 +47,9 @@ useEffect(() => {
   if (userInfo) {
     navigate('/mynotes');
   }
+  else{
+    console.log("H1! no notes to be shown");
+  }
 }, [navigate, userLogin.userInfo]);
 
 
@@ -56,6 +59,8 @@ useEffect(() => {
           console.log("Data from formstate",formState);
 
         dispatch(login(formState));
+    navigate('/mynotes');
+
 
 
       }

@@ -33,15 +33,19 @@ const createNote = asyncHandler(async (req, res) => {
 // get notes by using id
 
 const getNoteById = asyncHandler(async (req, res) => {
+
+
   const note = await Note.findById(req.params.id);
+  console.log("my note from note id :",req.params.id);
+    console.log("my note:",note);
+
 
   if (note) {
     res.json(note);
   } else {
-    res.status(404).json({ message: "Note not found" });
+    res.status(404).json({ message: "Note not found"});
   }
 
-  res.json(note);
 });
 
 // delete notes 
@@ -54,7 +58,7 @@ const DeleteNote = asyncHandler(async (req, res) => {
   }
 
   if (note) {
-    await note.remove();
+    await note.deleteOne();
     res.json({ message: "Note Removed" });
   } else {
     res.status(404);
@@ -67,6 +71,10 @@ const UpdateNote = asyncHandler(async (req, res) => {
   const { title, content, category } = req.body;
 
   const note = await Note.findById(req.params.id);
+    if (!note) {
+    res.status(404);
+    throw new Error("Note not found");
+  }
 
   if (note.user.toString() !== req.user._id.toString()) {
     res.status(401);

@@ -10,6 +10,7 @@ import Col from "react-bootstrap/Col";
 import { Link } from "react-router-dom";
 import {logout} from '../../actions/UserActions'
 import { useDispatch, useSelector } from "react-redux";
+import {NOTES_LIST_RESET} from '../../constants/NoteConstants'
 export default function Header() {
 
   const navigate = useNavigate();
@@ -21,6 +22,8 @@ export default function Header() {
 
   const logoutHandler = () =>{
     dispatch(logout());
+      // dispatch({ type: NOTES_LIST_RESET });  
+
     navigate('/');
   }
 
@@ -64,11 +67,7 @@ export default function Header() {
                   <NavDropdown.Item href="#action/3.1" className="">
                     My Profile
                   </NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.2" onClick={()=>{
-logoutHandler();
-                    navigate('/');
-
-                  }}>Logout</NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.2" onClick={logoutHandler}>Logout</NavDropdown.Item>
                 </NavDropdown>
               </Nav>
             </Navbar.Collapse>

@@ -30,7 +30,6 @@
 .buttonContainer {
   margin-top: 50px;
   display: flex;
-  border: 1px solid red;
   justify-content: space-evenly;
 }
 
